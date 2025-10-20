@@ -513,17 +513,22 @@ body {
     justify-content: flex-start;
     align-items: center;
     padding-top: 20px;
+    padding-left: 16px; /* ensure text not flush to left screen edge */
+    padding-right: 16px; /* ensure text not flush to right screen edge */
   }
 
   /* Điều chỉnh vị trí và kích thước của thư */
   .letter-container {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
+    position: fixed !important;
+    top: 62% !important; /* push letter further down so images don't overlap */
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.9) !important;
     margin-bottom: 20px;
-    width: 90%;
-    max-width: 320px;
+    width: 94%;
+    max-width: 360px;
+    z-index: 12;
+    padding-left: env(safe-area-inset-left, 6px);
+    padding-right: env(safe-area-inset-right, 6px);
   }
 
   #envelope {
@@ -533,6 +538,8 @@ body {
     aspect-ratio: 2/1;
     top: 0 !important;
     margin: 20px auto !important;
+    /* ensure mobile landing delay slightly later to avoid overlap */
+    animation-delay: 8s;
   }
 
   .flap {
@@ -554,7 +561,10 @@ body {
   }
 
   .message {
-    font-size: 14px !important;
+    font-size: 15px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    line-height: 1.6 !important;
   }
 
   /* Container cho hình ảnh */
@@ -568,24 +578,31 @@ body {
     padding: 0 10px !important;
   }
 
+  /* place gift images fixed and centered above the letter */
   #gift-image-left {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
+    position: fixed !important;
+    top: 34% !important; /* lower than before */
+    left: 50% !important;
     width: 130px !important;
     height: 130px !important;
-    transform: none !important;
-    margin: 10px !important;
+    transform: translate(-70%, -50%) scale(0) !important; /* off to left, will slide in */
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s !important;
+    margin: 0 !important;
+    z-index: 15 !important;
+    opacity: 0;
   }
-  
+
   #gift-image-right {
-    position: relative !important;
-    top: 0 !important;
-    right: 0 !important;
+    position: fixed !important;
+    top: 34% !important; /* lower than before */
+    left: 50% !important;
     width: 130px !important;
     height: 130px !important;
-    transform: none !important;
-    margin: 10px !important;
+    transform: translate(10%, -50%) scale(0) !important; /* off to right, will slide in */
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s !important;
+    margin: 0 !important;
+    z-index: 15 !important;
+    opacity: 0;
   }
 
   /* Thu nhỏ nút điều khiển */
@@ -793,41 +810,16 @@ body {
 }
 
 /* Hộp quà tương tác */
-.gift-box {
-  position: fixed;
-  z-index: 1000;
-  animation: giftLanding 1.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) 6s forwards;
-  transform: translateY(-100vh);
-}
+  /* show state for gift images */
+  #gift-image-left.show {
+    transform: translate(-70%, -50%) scale(1) !important;
+    opacity: 1 !important;
+  }
 
-.gift-left {
-  left: 10%;
-  top: 20%;
-}
-
-.gift-right {
-  right: 10%;
-  top: 20%;
-}
-
-.box {
-  position: relative;
-}
-
-.box::before {
-  content: "";
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  animation: glow 3s ease-in-out infinite alternate;
-}
-
+  #gift-image-right.show {
+    transform: translate(10%, -50%) scale(1) !important;
+    opacity: 1 !important;
+  }
 .box-body {
   position: relative;
   height: 120px;
