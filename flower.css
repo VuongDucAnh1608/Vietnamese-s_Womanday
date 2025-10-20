@@ -505,168 +505,19 @@ body {
 }
 
 /* CSS responsive cho mobile portrait */
-@media screen and (max-width: 768px) {
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 20px;
-    padding-left: 16px; /* ensure text not flush to left screen edge */
-    padding-right: 16px; /* ensure text not flush to right screen edge */
-  }
-
-  /* Điều chỉnh vị trí và kích thước của thư */
-  .letter-container {
-    position: fixed !important;
-    top: 62% !important; /* push letter further down so images don't overlap */
-    left: 50% !important;
-    transform: translate(-50%, -50%) scale(0.9) !important;
-    margin-bottom: 20px;
-    width: 94%;
-    max-width: 360px;
-    z-index: 12;
-    padding-left: env(safe-area-inset-left, 6px);
-    padding-right: env(safe-area-inset-right, 6px);
-  }
-
-  #envelope {
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 2/1;
-    top: 0 !important;
-    margin: 20px auto !important;
-    /* ensure mobile landing delay slightly later to avoid overlap */
-    animation-delay: 8s;
-  }
-
-  .flap {
-    border-left: 160px solid transparent !important;
-    border-right: 160px solid transparent !important;
-    border-bottom: 40px solid transparent !important;
-    border-top: 80px solid var(--color-flap) !important;
-  }
-
-  .pocket {
-    border-left: 160px solid var(--color-env) !important;
-    border-right: 160px solid var(--color-env) !important;
-    border-bottom: 40px solid var(--color-env2) !important;
-    border-top: 80px solid transparent !important;
-  }
-
-  .letter {
-    padding: 10px !important;
-  }
-
-  .message {
-    font-size: 15px !important;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-    line-height: 1.6 !important;
-  }
-
-  /* Container cho hình ảnh */
-  .gift-images-container {
-    position: relative !important;
-    width: 100% !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    margin: 20px 0 !important;
-    padding: 0 10px !important;
-  }
-
-  /* place gift images fixed and centered above the letter */
+@media screen and (max-width: 768px) and (orientation: portrait) {
   #gift-image-left {
-    position: fixed !important;
-    top: 34% !important; /* lower than before */
-    left: 50% !important;
-    width: 130px !important;
-    height: 130px !important;
-    transform: translate(-70%, -50%) scale(0) !important; /* off to left, will slide in */
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s !important;
-    margin: 0 !important;
-    z-index: 15 !important;
-    opacity: 0;
+    top: 30% !important;
+    left: 15% !important;
+    width: 140px !important;
+    height: 140px !important;
   }
-
+  
   #gift-image-right {
-    position: fixed !important;
-    top: 34% !important; /* lower than before */
-    left: 50% !important;
-    width: 130px !important;
-    height: 130px !important;
-    transform: translate(10%, -50%) scale(0) !important; /* off to right, will slide in */
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s !important;
-    margin: 0 !important;
-    z-index: 15 !important;
-    opacity: 0;
-  }
-
-  /* Thu nhỏ nút điều khiển */
-  .controls {
-    position: relative !important;
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-    margin: 15px 0 !important;
-  }
-
-  .controls button {
-    padding: 8px 16px !important;
-    font-size: 14px !important;
-    margin: 5px !important;
-  }
-
-  /* Thu nhỏ hoa và đặt ở dưới cùng */
-  .flowers {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    transform: scale(0.6) !important;
-    z-index: -1 !important;
-  }
-}
-
-/* Thêm media query cho điện thoại màn hình nhỏ */
-@media screen and (max-width: 480px) {
-  .letter-container {
-    max-width: 280px;
-  }
-
-  #envelope {
-    transform: scale(0.9) !important;
-  }
-
-  #gift-image-left,
-  #gift-image-right {
-    width: 110px !important;
-    height: 110px !important;
-  }
-
-  .message {
-    font-size: 13px !important;
-  }
-
-  .controls button {
-    padding: 6px 12px !important;
-    font-size: 12px !important;
-  }
-
-  .flowers {
-    transform: scale(0.5) !important;
-  }
-}
-
-/* Thêm media query cho màn hình cao */
-@media screen and (min-height: 700px) {
-  .letter-container {
-    margin-top: 40px;
+    top: 30% !important;
+    right: 15% !important;
+    width: 140px !important;
+    height: 140px !important;
   }
 }
 
@@ -810,16 +661,41 @@ body {
 }
 
 /* Hộp quà tương tác */
-  /* show state for gift images */
-  #gift-image-left.show {
-    transform: translate(-70%, -50%) scale(1) !important;
-    opacity: 1 !important;
-  }
+.gift-box {
+  position: fixed;
+  z-index: 1000;
+  animation: giftLanding 1.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) 6s forwards;
+  transform: translateY(-100vh);
+}
 
-  #gift-image-right.show {
-    transform: translate(10%, -50%) scale(1) !important;
-    opacity: 1 !important;
-  }
+.gift-left {
+  left: 10%;
+  top: 20%;
+}
+
+.gift-right {
+  right: 10%;
+  top: 20%;
+}
+
+.box {
+  position: relative;
+}
+
+.box::before {
+  content: "";
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
 .box-body {
   position: relative;
   height: 120px;
